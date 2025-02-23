@@ -1,46 +1,63 @@
-const textInput = document.getElementById('textInput');
-const chart = document.getElementById('chart');
+const a = document.getElementById('textInput'), 
+      b = document.getElementById('chart');
 
-textInput.addEventListener('input', () => {
-  const text = textInput.value.toLowerCase();
-  const caunt = {};
-  const totalLetters = text.replace(/[^a-z]/g, '').length;
+a.addEventListener('input', () => {
+    
+    let c = a.value.toLowerCase(), 
+        d = {}, 
+        e = c.replace(/[^a-z]/g, '').length;
 
-  for (let char of text) {
-    if (/[a-z]/.test(char)) {
-      caunt[char] = (caunt[char] || 0) + 1;
+    for (let f of c) { 
+        if (/[a-z]/.test(f)) { 
+            if (d[f]) { 
+                d[f] = d[f] + 1; 
+            } else { 
+                d[f] = 1; 
+            } 
+        } 
     }
-  }
 
-  const bbb = Object.entries(caunt).sort((a, b) => b[1] - a[1]);
+    let g = Object.entries(d)
+                  .sort((h, i) => { 
+                      if (i[1] > h[1]) { 
+                          return 1; 
+                      } else { 
+                          return -1; 
+                      } 
+                  });
 
-  chart.innerHTML = '';
-  for (let [letter, count] of bbb) {
-    const percentage = ((count / totalLetters) * 100).toFixed(2);
+    b.innerHTML = '';
 
-    const row = document.createElement('div');
-    row.className = 'chart-row';
+    for (let j = 0; j < g.length; j++) { 
+        let k = g[j][0], 
+            l = g[j][1];
 
-    const label = document.createElement('div');
-    label.className = 'label';
-    label.textContent = letter.toUpperCase();
+        let m = ((l / e) * 100)
+                     .toFixed(3);
 
-    const bar = document.createElement('div');
-    bar.className = 'bar';
+        let n = document.createElement('div');
+        n.className = 'chart-row';
 
-    const fill = document.createElement('div');
-    fill.className = 'fill';
-    fill.style.width = `${percentage}%`;
+        let o = document.createElement('div');
+        o.className = 'label'; 
+        o.textContent = k.toUpperCase();
 
-    const span = document.createElement('span');
-    span.className = 'percentage';
-    span.textContent = `${percentage}%`;
+        let p = document.createElement('div');
+        p.className = 'bar';
 
-    fill.appendChild(span);
-    bar.appendChild(fill);
-    row.appendChild(label);
-    row.appendChild(bar);
+        let q = document.createElement('div');
+        p.appendChild(q);
+        b.appendChild(n);
+        q.className = 'fill'; 
+        q.style.width = `${m}%`;
+        
+        let r = document.createElement('span');
+        n.appendChild(r); 
+        q.appendChild(document.createTextNode("")); 
+        r.className = 'percentage'; 
+        r.textContent = `${m}%`;
+        n.appendChild(o);
+        n.appendChild(p);
 
-    chart.appendChild(row);
-  }
+    }
 });
